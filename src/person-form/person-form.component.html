@@ -1,0 +1,37 @@
+<form [formGroup]="personForm">
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name">
+    <mat-error *ngIf="this.personForm.get('name').hasError('required')">
+      Bitte den Namen eintragen.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Alter</mat-label>
+    <!-- <input matInput formControlName="alter" [errorStateMatcher]="cfLandPlzErrorMatcher"> -->
+    <input matInput formControlName="alter">
+    <mat-error *ngIf="this.personForm.get('alter').hasError('required')">
+      Bitte das Alter eintragen.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Land</mat-label>
+    <input matInput formControlName="land" [errorStateMatcher]="cfLandPlzErrorMatcher">
+    <mat-error *ngIf="this.personForm.get('land').hasError('required')">
+      Bitte ein Land eintragen.
+    </mat-error>
+    <mat-error *ngIf="this.personForm.hasError('landPlzError')">
+      Bitte geben Sie ein Land ein für das die Postleitzahl zulässig ist.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Postleitzahl</mat-label>
+    <input matInput formControlName="postleitzahl" [errorStateMatcher]="cfLandPlzErrorMatcher">
+    <mat-error *ngIf="this.personForm.hasError('landPlzError')">
+      Die Postleitzahl muss 5-stellig sein.
+    </mat-error>
+    <mat-error *ngIf="this.personForm.get('postleitzahl').hasError('required')">
+      Bitte eine Postleitzahl eintragen.
+    </mat-error>
+  </mat-form-field>
+</form>
