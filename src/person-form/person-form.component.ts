@@ -21,15 +21,25 @@ const landPlzValidator: ValidatorFn = (control: FormGroup): ValidationErrors | n
 };
 
 /**
+ * Common ErrorStateMatcher für 'mat-error'-Komponenten.
+ * Gibt zurück, wenn FormControl invalid ist.
+ */
+class CommonErrorMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    return control.invalid && control.touched;
+  }
+}
+
+/**
  * ErrorStateMatcher für 'mat-error'-Komponente.
  * Gibt true (= Fehler) zurück, wenn FormControl invalid ist (Standard-Validatoren) oder FormGroup Error besitzt von 'landPlzValidator'.
  */
-class CFLandPlzErrorMatcher implements ErrorStateMatcher {
+class CFLandPlzErrorMatcher extends CommonErrorMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     console.log(`control dirty? ${control.dirty} form error? ${form.hasError('landPlzError')}`);
       /* control has standard validator error(s) */
       /* form has custom validator error */
-    return control.invalid && control.touched || form.hasError('landPlzError');
+    return super.isErrorState(control, form) || form.hasError('landPlzError');
   }
 }
 
