@@ -77,7 +77,8 @@ export class PersonFormComponent implements OnInit {
     this.personForm = this.fb.group({
       name: ['', {
         validators: Validators.required,
-        asyncValidators: this.nameValidators.namesAsyncValidator()
+        asyncValidators: NameValidator.instance.namesAsyncValidator()
+        // asyncValidators: this.nameValidators.namesAsyncValidator()
       }],
       alter: ['', Validators.required],
       land: ['', Validators.required],

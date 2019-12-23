@@ -10,7 +10,12 @@ import { Name } from './name';
 })
 export class NameValidator {
 
-  constructor(private http: HttpClient) {}
+  // hack, um Service nicht injezieren zu müsen
+  static instance: NameValidator;
+
+  constructor(private http: HttpClient) {
+    NameValidator.instance = this;
+  }
 
   /**
    * Async Validator.
